@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/inicio"
+            android:icon="@drawable/ic_inicio"
+            android:title="@string/inicio" />
+        <item
+            android:id="@+id/fincas"
+            android:icon="@drawable/ic_finca"
+            android:title="@string/fincas" />
+
+        <item
+            android:id="@+id/parcela"
+            android:icon="@drawable/ic_parcela"
+            android:title="@string/parcela" />
+        <item
+            android:id="@+id/equipo"
+            android:icon="@drawable/ic_sensor"
+            android:title="@string/equipo" />
+        <item
+            android:id="@+id/usuario"
+            android:icon="@drawable/ic_usuario"
+            android:title="@string/usuario" />
+        <item
+            android:id="@+id/config_equipo"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/configurar_equipo" />
+    </group>
+
+</menu>

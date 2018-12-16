@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">AgroSmart</string>
+    <string name="title_activity_login">Entrar</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Entrar</string>
+    <string name="action_sign_in_short">Entrar</string>
+    <string name="error_invalid_email">El email es invalido</string>
+    <string name="error_invalid_password">Esta contraseña es muy pequeña</string>
+    <string name="error_incorrect_password">Esta contraseña es incorrecta</string>
+    <string name="error_field_required">El campo es requerido</string>
+    <string name="permission_rationale">"Permisos a los conactos es requerido."
+    </string>
+    <string name="error_network">Conexion de red no disponible</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="fragment_admin">Fragment Administrador</string>
+    <string name="fragment_agrono">Fragment Agronomo</string>
+    <string name="fragment_ciente">Fragment Cliente</string>
+
+    <string name="logout">Salir</string>
+    <string name="search">Buscar</string>
+    <string name="Equipos">Equipos</string>
+    <string name="Usuarios">Usuarios</string>
+
+    <string name="inicio">Inicio</string>
+    <string name="fincas">Fincas</string>
+    <string name="parcela">Parcela</string>
+    <string name="equipo">Equipos</string>
+    <string name="usuario">Usuario</string>
+    <string name="configurar_equipo">Configurar Equipo</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="administrador">Administrador</string>
+    <string name="agronomo">Agronomo</string>
+    <string name="cliente">Cliente</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
