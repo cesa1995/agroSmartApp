@@ -74,7 +74,7 @@ public class ListaUsuarioAdminAdapter extends RecyclerView.Adapter<ListaUsuarioA
             nombreApellido = itemView.findViewById(R.id.UsuarioNombreApellido);
             email = itemView.findViewById(R.id.UsuarioEmail);
             nivel = itemView.findViewById(R.id.UsuarioNivel);
-            borrar = itemView.findViewById(R.id.borrar_usuario);
+            borrar = itemView.findViewById(R.id.borrarUsuario);
 
             borrar.setOnClickListener(new View.OnClickListener() {
                 @Override

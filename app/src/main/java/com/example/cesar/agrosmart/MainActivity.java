@@ -172,32 +172,26 @@ public class MainActivity extends AppCompatActivity
             case R.id.inicio:{
                 fragment = new IndexAdmin();
                 fragmentSelect=true;
-                Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show();
             }break;
             case R.id.fincas:{
                 fragment = new adminFincas();
                 fragmentSelect = true;
-                Toast.makeText(this,"finca",Toast.LENGTH_SHORT).show();
             }break;
             case R.id.parcela:{
                 fragment = new adminParcela();
                 fragmentSelect = true;
-                Toast.makeText(this,"parcela",Toast.LENGTH_SHORT).show();
             }break;
             case R.id.equipo:{
                 fragment = new adminEquipos();
                 fragmentSelect = true;
-                Toast.makeText(this,"equipo",Toast.LENGTH_SHORT).show();
             }break;
             case R.id.usuario:{
                 fragment = new adminUsuarios();
                 fragmentSelect = true;
-                Toast.makeText(this,"usuario",Toast.LENGTH_SHORT).show();
             }break;
             case R.id.config_equipo:{
                 fragment = new adminConfiEquipos();
                 fragmentSelect = true;
-                Toast.makeText(this,"config",Toast.LENGTH_SHORT).show();
             }break;
         }
 
