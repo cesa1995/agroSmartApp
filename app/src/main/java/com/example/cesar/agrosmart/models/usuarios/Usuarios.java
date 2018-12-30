@@ -1,4 +1,4 @@
-package com.example.cesar.agrosmart.models.fincas;
+package com.example.cesar.agrosmart.models.usuarios;
 
 public class Usuarios {
     private String id;

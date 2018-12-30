@@ -32,24 +32,18 @@
                 android:textAllCaps="true"
                 android:textStyle="bold"
                 android:textSize="14sp"
-                android:text="hola"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/finca"
-                android:textColor="@color/blanco"
-                android:textSize="14sp"
-                android:text="hola"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tipo"
                 android:textColor="@color/blanco"
                 android:layout_width="wrap_content"
                 android:textStyle="italic"
-                android:text="hola"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 

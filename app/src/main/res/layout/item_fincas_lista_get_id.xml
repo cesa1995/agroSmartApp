@@ -9,22 +9,15 @@
     android:layout_marginRight="10dp"
     android:layout_marginEnd="10dp"
     android:layout_marginTop="5dp"
-    android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="UselessParent"
-        android:layout_gravity="center_vertical"
-        android:background="@drawable/list_background">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:orientation="vertical"
-            tools:ignore="RelativeOverlap">
+    android:paddingTop="3dp"
+    android:paddingStart="20dp"
+    android:paddingLeft="20dp"
+    android:paddingEnd="0dp"
+    android:paddingRight="0dp"
+    android:gravity="center_vertical"
+    android:background="@drawable/list_select_background"
+    android:orientation="vertical"
+    android:id="@+id/item">
 
             <TextView
                 android:id="@+id/nombre"
@@ -38,7 +31,7 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/devicetype"
+                android:id="@+id/telefono"
                 android:textColor="@color/blanco"
                 android:textSize="14sp"
                 android:maxLines="1"
@@ -47,29 +40,11 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/descripcion"
+                android:id="@+id/direccion"
                 android:textColor="@color/blanco"
                 android:layout_width="wrap_content"
                 android:textStyle="italic"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-
-        <Button
-            android:id="@+id/borrarEquipo"
-            android:background="@drawable/button_select_up"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
-            android:paddingLeft="10dp"
-            android:paddingStart="10dp"
-            android:paddingRight="0dp"
-            android:paddingEnd="0dp"
-            android:paddingTop="5dp"
-            android:drawableTop="@drawable/ic_remove"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" />
-
-    </RelativeLayout>
 </LinearLayout>

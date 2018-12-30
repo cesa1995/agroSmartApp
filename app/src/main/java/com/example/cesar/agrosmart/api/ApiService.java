@@ -1,14 +1,18 @@
 package com.example.cesar.agrosmart.api;
 
-
-
+import com.example.cesar.agrosmart.apiBody.addEquipoBody;
+import com.example.cesar.agrosmart.apiBody.addFincaBody;
+import com.example.cesar.agrosmart.apiBody.addParcelaBody;
+import com.example.cesar.agrosmart.apiBody.addUsuariosBody;
+import com.example.cesar.agrosmart.apiBody.deleteBody;
 import com.example.cesar.agrosmart.apiBody.jwtOnlyBody;
 import com.example.cesar.agrosmart.apiBody.loginBody;
 import com.example.cesar.agrosmart.models.LoginRespuesta;
-import com.example.cesar.agrosmart.models.fincas.ReadEquiposRespuesta;
+import com.example.cesar.agrosmart.models.equipos.ReadEquiposRespuesta;
 import com.example.cesar.agrosmart.models.fincas.ReadFincasRespuesta;
-import com.example.cesar.agrosmart.models.fincas.ReadParcelasRespuesta;
-import com.example.cesar.agrosmart.models.fincas.ReadUsuariosRespuesta;
+import com.example.cesar.agrosmart.models.parcelas.ReadParcelasRespuesta;
+import com.example.cesar.agrosmart.models.respuesta.Respuesta;
+import com.example.cesar.agrosmart.models.usuarios.ReadUsuariosRespuesta;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -30,4 +34,28 @@ public interface ApiService {
 
     @POST("parcelas/read.php")
     Call<ReadParcelasRespuesta>obtenerParcelas(@Body jwtOnlyBody jwtOnlyBody);
+
+    @POST("usuarios/create.php")
+    Call<Respuesta>guardasUsuario(@Body addUsuariosBody addUsuariosBody);
+
+    @POST("parcelas/create.php")
+    Call<Respuesta>guardarParcela(@Body addParcelaBody addParcelaBody);
+
+    @POST("fincas/create.php")
+    Call<Respuesta>guardarFinca(@Body addFincaBody addFincaBody);
+
+    @POST("equipos/create.php")
+    Call<Respuesta>guardarEquipo(@Body addEquipoBody addEquipoBody);
+
+    @POST("usuarios/delete.php")
+    Call<Respuesta>eliminarUsuario(@Body deleteBody deleteBody);
+
+    @POST("parcelas/delete.php")
+    Call<Respuesta>eliminarParcela(@Body deleteBody deleteBody);
+
+    @POST("fincas/delete.php")
+    Call<Respuesta>eliminarFinca(@Body deleteBody deleteBody);
+
+    @POST("equipos/delete.php")
+    Call<Respuesta>eliminarEquipo(@Body deleteBody deleteBody);
 }

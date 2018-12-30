@@ -1,4 +1,4 @@
-package com.example.cesar.agrosmart.admin;
+package com.example.cesar.agrosmart.admin.admin;
 
 import android.content.Context;
 import android.net.Uri;

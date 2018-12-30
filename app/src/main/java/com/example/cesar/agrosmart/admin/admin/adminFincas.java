@@ -1,27 +1,29 @@
-package com.example.cesar.agrosmart.admin;
+package com.example.cesar.agrosmart.admin.admin;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.cesar.agrosmart.R;
 import com.example.cesar.agrosmart.adapter.ListaFincasAdminAdapter;
-import com.example.cesar.agrosmart.adapter.ListaFincasIndexAdapter;
+import com.example.cesar.agrosmart.admin.add.addFincas;
+import com.example.cesar.agrosmart.admin.add.addParcelas;
 import com.example.cesar.agrosmart.api.ApiService;
 import com.example.cesar.agrosmart.apiBody.jwtOnlyBody;
 import com.example.cesar.agrosmart.models.ApiError;
 import com.example.cesar.agrosmart.models.fincas.Fincas;
-import com.example.cesar.agrosmart.models.fincas.ReadEquiposRespuesta;
 import com.example.cesar.agrosmart.models.fincas.ReadFincasRespuesta;
 
 import java.util.ArrayList;
@@ -42,6 +44,8 @@ public class adminFincas extends Fragment {
 
     private ListaFincasAdminAdapter listaFincasAdminAdapter;
 
+    FloatingActionButton addfincas;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +65,10 @@ public class adminFincas extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        addfincas = view.findViewById(R.id.addFinca);
+
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        listaFincasAdminAdapter = new ListaFincasAdminAdapter(getContext());
+        listaFincasAdminAdapter = new ListaFincasAdminAdapter(getContext(), jwt);
         recyclerView.setAdapter(listaFincasAdminAdapter);
         recyclerView.setHasFixedSize(true);
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(),1);
@@ -74,6 +80,20 @@ public class adminFincas extends Fragment {
                 .build();
 
         obtenerdatos();
+
+        addfincas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("jwt",jwt);
+                Fragment fragment = new addFincas();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragment.setArguments(bundle);
+                transaction.replace(R.id.content_main, fragment).addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
     }
 
     private void obtenerdatos(){

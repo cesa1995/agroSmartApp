@@ -38,6 +38,25 @@
     <string name="agronomo">Agronomo</string>
     <string name="cliente">Cliente</string>
 
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="Email">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="tipo">Tipo</string>
+    <string name="telefono">Telefono</string>
+    <string name="Direccion">Dirección</string>
+    <string name="tipo_de_dispositivo">Tipo de Dispositivo</string>
+    <string name="descripcion">Descripcion</string>
+
+    <string name="guardar">Guardar</string>
+
+    <string name="titulo_add_user">Agregue un Nuevo Usuario</string>
+    <string name="titulo_add_parcela">Agregue una Nueva Parcela</string>
+    <string name="titulo_add_finca">Agregue una Nueva Finca</string>
+    <string name="titulo_add_equipo">Agregue un Nuevo Equipo</string>
+
+    <string name="nombre_no_valido">Nombre no valido</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

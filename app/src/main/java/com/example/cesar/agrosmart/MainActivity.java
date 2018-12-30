@@ -19,18 +19,19 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.example.cesar.agrosmart.admin.IndexAdmin;
-import com.example.cesar.agrosmart.admin.adminConfiEquipos;
-import com.example.cesar.agrosmart.admin.adminEquipos;
-import com.example.cesar.agrosmart.admin.adminFincas;
-import com.example.cesar.agrosmart.admin.adminParcela;
-import com.example.cesar.agrosmart.admin.adminUsuarios;
+import com.example.cesar.agrosmart.admin.Index.IndexAdmin;
+import com.example.cesar.agrosmart.admin.ListasGenerales.fincasListaGetID;
+import com.example.cesar.agrosmart.admin.admin.adminConfiEquipos;
+import com.example.cesar.agrosmart.admin.admin.adminEquipos;
+import com.example.cesar.agrosmart.admin.admin.adminFincas;
+import com.example.cesar.agrosmart.admin.admin.adminParcela;
+import com.example.cesar.agrosmart.admin.admin.adminUsuarios;
 import com.example.cesar.agrosmart.agrono.IndexAgrono;
 import com.example.cesar.agrosmart.client.IndexClient;
 import com.example.cesar.agrosmart.interfaces.IFragments;
 import com.example.cesar.agrosmart.session.sessionPrefs;
 
-import static android.support.v4.view.MenuItemCompat.getActionView;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,IFragments {
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     String nombre,apellido,nivel,jwt;
     Toolbar toolbar;
     Bundle bundle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         Index();
-
     }
 
     @Override
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater  = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.menu_search, menu);
 
         final MenuItem searchItem = menu.findItem(R.id.search);
         final SearchView searchView = (SearchView) searchItem.getActionView();
@@ -131,32 +132,33 @@ public class MainActivity extends AppCompatActivity
 
     private void Index(){
 
+        Fragment fragment = null;
+        boolean fragmentSelect = false;
+
         switch (nivel){
             case "0": {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                IndexAdmin indexAdmin = new IndexAdmin();
-                indexAdmin.setArguments(bundle);
-                transaction.replace(R.id.content_main, indexAdmin);
-                transaction.commit();
+                fragment = new IndexAdmin();
+                fragmentSelect = true;
 
                 NavigationView navigationView = findViewById(R.id.nav_view);
                 navigationView.inflateMenu(R.menu.activity_main_drawer);
                 navigationView.setNavigationItemSelectedListener(this);
             }break;
             case "1": {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                IndexAgrono indexAgrono = new IndexAgrono();
-                indexAgrono.setArguments(bundle);
-                transaction.replace(R.id.content_main, indexAgrono);
-                transaction.commit();
+                fragment = new IndexAgrono();
+                fragmentSelect = true;
             }break;
             case "2": {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                IndexClient indexclient = new IndexClient();
-                indexclient.setArguments(bundle);
-                transaction.replace(R.id.content_main, indexclient);
-                transaction.commit();
+                fragment = new IndexClient();
+                fragmentSelect = true;
             }break;
+        }
+
+        if (fragmentSelect){
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            fragment.setArguments(bundle);
+            transaction.replace(R.id.content_main, fragment);
+            transaction.commit();
         }
     }
 
@@ -177,19 +179,19 @@ public class MainActivity extends AppCompatActivity
                 fragment = new adminFincas();
                 fragmentSelect = true;
             }break;
-            case R.id.parcela:{
+            case R.id.parcelas:{
                 fragment = new adminParcela();
                 fragmentSelect = true;
             }break;
-            case R.id.equipo:{
+            case R.id.equipos:{
                 fragment = new adminEquipos();
                 fragmentSelect = true;
             }break;
-            case R.id.usuario:{
+            case R.id.usuarios:{
                 fragment = new adminUsuarios();
                 fragmentSelect = true;
             }break;
-            case R.id.config_equipo:{
+            case R.id.config_equipos:{
                 fragment = new adminConfiEquipos();
                 fragmentSelect = true;
             }break;
@@ -197,7 +199,7 @@ public class MainActivity extends AppCompatActivity
 
         if (fragmentSelect){
             fragment.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).addToBackStack(null).commit();
         }
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);

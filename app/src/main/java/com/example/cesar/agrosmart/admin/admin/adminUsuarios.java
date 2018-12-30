@@ -1,11 +1,14 @@
-package com.example.cesar.agrosmart.admin;
+package com.example.cesar.agrosmart.admin.admin;
 
-import android.content.Context;
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,15 +17,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.cesar.agrosmart.MainActivity;
 import com.example.cesar.agrosmart.R;
 import com.example.cesar.agrosmart.adapter.ListaUsuarioAdminAdapter;
+import com.example.cesar.agrosmart.admin.add.addUsuarios;
 import com.example.cesar.agrosmart.api.ApiService;
 import com.example.cesar.agrosmart.apiBody.jwtOnlyBody;
 import com.example.cesar.agrosmart.models.ApiError;
-import com.example.cesar.agrosmart.models.fincas.ReadUsuariosRespuesta;
-import com.example.cesar.agrosmart.models.fincas.Usuarios;
+import com.example.cesar.agrosmart.models.usuarios.ReadUsuariosRespuesta;
+import com.example.cesar.agrosmart.models.usuarios.Usuarios;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -61,8 +65,10 @@ public class adminUsuarios extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        FloatingActionButton add = view.findViewById(R.id.addUsuario);
+
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        listaUsuarioAdminAdapter = new ListaUsuarioAdminAdapter(getContext());
+        listaUsuarioAdminAdapter = new ListaUsuarioAdminAdapter(getContext(),jwt);
         recyclerView.setAdapter(listaUsuarioAdminAdapter);
         recyclerView.setHasFixedSize(true);
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(),1);
@@ -74,6 +80,21 @@ public class adminUsuarios extends Fragment {
                 .build();
 
         obtenerdatos();
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("jwt",jwt);
+                Fragment fragment = new addUsuarios();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragment.setArguments(bundle);
+                transaction.replace(R.id.content_main, fragment).addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+
     }
 
     private void obtenerdatos(){

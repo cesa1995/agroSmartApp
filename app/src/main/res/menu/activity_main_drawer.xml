@@ -12,19 +12,19 @@
             android:title="@string/fincas" />
 
         <item
-            android:id="@+id/parcela"
+            android:id="@+id/parcelas"
             android:icon="@drawable/ic_parcela"
             android:title="@string/parcela" />
         <item
-            android:id="@+id/equipo"
+            android:id="@+id/equipos"
             android:icon="@drawable/ic_sensor"
             android:title="@string/equipo" />
         <item
-            android:id="@+id/usuario"
+            android:id="@+id/usuarios"
             android:icon="@drawable/ic_usuario"
             android:title="@string/usuario" />
         <item
-            android:id="@+id/config_equipo"
+            android:id="@+id/config_equipos"
             android:icon="@drawable/ic_settings"
             android:title="@string/configurar_equipo" />
     </group>

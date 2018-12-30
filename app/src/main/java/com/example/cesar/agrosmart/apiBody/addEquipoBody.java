@@ -1,17 +1,24 @@
-package com.example.cesar.agrosmart.models.fincas;
+package com.example.cesar.agrosmart.apiBody;
 
-public class Equipos {
+public class addEquipoBody {
     private String nombre;
     private String devicetype;
     private String descripcion;
-    private String id;
+    private String jwt;
 
-    public String getId() {
-        return id;
+    public addEquipoBody(String nombre, String devicetype, String descripcion, String jwt) {
+        this.nombre = nombre;
+        this.devicetype = devicetype;
+        this.descripcion = descripcion;
+        this.jwt=jwt;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getJwt() {
+        return jwt;
+    }
+
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
     }
 
     public String getNombre() {
