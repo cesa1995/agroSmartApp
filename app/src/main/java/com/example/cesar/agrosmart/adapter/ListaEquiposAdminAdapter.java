@@ -1,7 +1,11 @@
 package com.example.cesar.agrosmart.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cesar.agrosmart.R;
+import com.example.cesar.agrosmart.admin.update.UpdateEquipo;
 import com.example.cesar.agrosmart.api.ApiService;
 import com.example.cesar.agrosmart.apiBody.deleteBody;
 import com.example.cesar.agrosmart.models.ApiError;
@@ -49,11 +54,14 @@ public class ListaEquiposAdminAdapter extends RecyclerView.Adapter<ListaEquiposA
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Equipos E = dataset.get(position);
-        holder.nombre.setText(E.getNombre());
-        holder.typedevice.setText(E.getDevicetype());
-        holder.descripcion.setText(E.getDescripcion());
+        holder.nombre=E.getNombre();
+        holder.tipo=E.getDevicetype();
+        holder.descripcion=E.getDescripcion();
         holder.id = E.getId();
         holder.position = holder.getAdapterPosition();
+        holder.mNombreView.setText(holder.nombre);
+        holder.mTipoView.setText(holder.tipo);
+        holder.mDescripcionView.setText(holder.descripcion);
     }
 
     @Override
@@ -70,19 +78,38 @@ public class ListaEquiposAdminAdapter extends RecyclerView.Adapter<ListaEquiposA
 
         public static final String TAG = "recycleview";
 
-        private TextView nombre, typedevice, descripcion;
+        private TextView mNombreView, mTipoView, mDescripcionView;
         private Button borrar;
-        private String id;
+        private String id, nombre, tipo, descripcion;
         private int position;
         Retrofit retrofit;
+        private View item;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            nombre = itemView.findViewById(R.id.nombre);
-            typedevice = itemView.findViewById(R.id.devicetype);
-            descripcion = itemView.findViewById(R.id.descripcion);
+            mNombreView = itemView.findViewById(R.id.nombre);
+            mTipoView= itemView.findViewById(R.id.devicetype);
+            mDescripcionView = itemView.findViewById(R.id.descripcion);
             borrar = itemView.findViewById(R.id.borrarEquipo);
+            item=itemView.findViewById(R.id.item);
+
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle=new Bundle();
+                    bundle.putString("jwt", jwt);
+                    bundle.putString("id", id);
+                    bundle.putString("nombre", nombre);
+                    bundle.putString("tipo", tipo);
+                    bundle.putString("descripcion", descripcion);
+                    Fragment fragment = new UpdateEquipo();
+                    FragmentTransaction transaction = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
+                    fragment.setArguments(bundle);
+                    transaction.replace(R.id.content_main, fragment).addToBackStack(null);
+                    transaction.commit();
+                }
+            });
 
             borrar.setOnClickListener(new View.OnClickListener() {
                 @Override

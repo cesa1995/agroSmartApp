@@ -1,27 +1,29 @@
-package com.example.cesar.agrosmart.admin.add;
+package com.example.cesar.agrosmart.admin.update;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cesar.agrosmart.R;
 import com.example.cesar.agrosmart.api.ApiService;
-import com.example.cesar.agrosmart.apiBody.addFincaBody;
+import com.example.cesar.agrosmart.apiBody.update.updateUsuarioBody;
 import com.example.cesar.agrosmart.models.ApiError;
 import com.example.cesar.agrosmart.models.respuesta.Respuesta;
 
@@ -31,12 +33,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class addFincas extends Fragment {
+public class UpdateUsuario extends Fragment {
 
-    public static final String TAG = "addfincas";
+    public static final String TAG = "updateuser";
 
     private String jwt;
-    private EditText mNombreView, mTelefonoView, mDireccionView;
+    private Long jerarquia;
+    private EditText mNombreView, mApellidoView, mEmailView;
+    private String id, nombre, apellido, email, nivel;
     private View mFormView, mProgressView;
     private Retrofit retrofit;
 
@@ -44,15 +48,19 @@ public class addFincas extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null){
-            jwt = getArguments().getString("jwt","vacio");
+            jwt=getArguments().getString("jwt", "vacio");
+            id=getArguments().getString("id", "vacio");
+            nombre = getArguments().getString("nombre", "vacio");
+            apellido = getArguments().getString("apellido", "vacio");
+            email = getArguments().getString("email", "vacio");
+            nivel = getArguments().getString("nivel", "vacio");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_fincas, container, false);
+        return inflater.inflate(R.layout.fragment_update_usuario, container, false);
     }
 
     @Override
@@ -60,63 +68,105 @@ public class addFincas extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mNombreView=view.findViewById(R.id.nombre);
-        mTelefonoView=view.findViewById(R.id.telefono);
-        mDireccionView=view.findViewById(R.id.direccion);
-        Button mGuardarView=view.findViewById(R.id.guardar);
+        mApellidoView=view.findViewById(R.id.apellido);
+        mEmailView=view.findViewById(R.id.email);
+        TextView mCambiarpassView = view.findViewById(R.id.cambiar_pass);
+        AppCompatSpinner mNivelUsuariosView = view.findViewById(R.id.nivelUsuarios);
+        Button mGuardarView = view.findViewById(R.id.guardar);
+
+        String[] niveles = {"Administrador", "Agronomo", "Cliente"};
+        mNivelUsuariosView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext() , android.R.layout.simple_spinner_item,niveles));
+
+        mNombreView.setText(nombre);
+        mApellidoView.setText(apellido);
+        mEmailView.setText(email);
+        mNivelUsuariosView.setSelection(Integer.parseInt(nivel));
+
+        mNivelUsuariosView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                jerarquia = parent.getItemIdAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         mGuardarView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                guardarFinca();
+                guardarUsuario();
+            }
+        });
+
+        mCambiarpassView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("jwt", jwt);
+                bundle.putString("id", id);
+                Fragment fragment = new UpdateUsuariopass();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragment.setArguments(bundle);
+                transaction.replace(R.id.content_main, fragment).addToBackStack(null);
+                transaction.commit();
             }
         });
 
         mFormView=view.findViewById(R.id.form);
         mProgressView=view.findViewById(R.id.progress);
 
-        retrofit=new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.0.107/agroSmart/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+
     }
 
-    private void guardarFinca(){
+    private void guardarUsuario(){
+
         mNombreView.setError(null);
-        mTelefonoView.setError(null);
-        mDireccionView.setError(null);
+        mApellidoView.setError(null);
+        mEmailView.setError(null);
 
         String nombre = mNombreView.getText().toString();
-        String telefono = mTelefonoView.getText().toString();
-        String direccion = mDireccionView.getText().toString();
+        String apellido = mApellidoView.getText().toString();
+        String email = mEmailView.getText().toString();
 
-        boolean cancel = false;
+        boolean calcel = false;
         View focusView = null;
 
         if (TextUtils.isEmpty(nombre)){
             mNombreView.setError(getString(R.string.error_field_required));
             focusView = mNombreView;
-            cancel = true;
+            calcel = true;
         }
 
-        if (TextUtils.isEmpty(telefono)){
-            mTelefonoView.setError(getString(R.string.error_field_required));
-            focusView=mTelefonoView;
-            cancel=true;
+        if (TextUtils.isEmpty(apellido)){
+            mApellidoView.setError(getString(R.string.error_field_required));
+            focusView = mApellidoView;
+            calcel = true;
         }
 
-        if (TextUtils.isEmpty(direccion)){
-            mDireccionView.setError(getString(R.string.error_field_required));
-            focusView=mDireccionView;
-            cancel=true;
+        if (TextUtils.isEmpty(email)){
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
+            calcel = true;
+        }else if (!isValidEmail(email)){
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
+            calcel = true;
         }
 
-        if (cancel){
+        if (calcel){
             focusView.requestFocus();
         }else {
             showProgress(true);
-
             ApiService service = retrofit.create(ApiService.class);
-            Call<Respuesta> respuestaCall = service.guardarFinca(new addFincaBody(nombre,telefono,direccion,jwt));
+            Call<Respuesta> respuestaCall = service.updateUsuario(new updateUsuarioBody(id,nombre,apellido,email, jerarquia.toString(),jwt));
 
             respuestaCall.enqueue(new Callback<Respuesta>() {
                 @Override
@@ -144,7 +194,7 @@ public class addFincas extends Fragment {
 
                 @Override
                 public void onFailure(Call<Respuesta> call, Throwable t) {
-
+                    showProgress(false);
                 }
             });
         }
@@ -152,7 +202,7 @@ public class addFincas extends Fragment {
     }
 
     private void showMessage(String message){
-        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getApplicationContext(),message,Toast.LENGTH_SHORT).show();
     }
 
     private void showProgress(final boolean show){
@@ -178,8 +228,13 @@ public class addFincas extends Fragment {
 
     }
 
+    private boolean isValidEmail(String email){
+        return email.contains("@") && email.contains(".com");
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

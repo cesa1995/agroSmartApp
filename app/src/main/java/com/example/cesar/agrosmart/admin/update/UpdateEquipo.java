@@ -1,4 +1,4 @@
-package com.example.cesar.agrosmart.admin.add;
+package com.example.cesar.agrosmart.admin.update;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -11,8 +11,6 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.cesar.agrosmart.R;
 import com.example.cesar.agrosmart.api.ApiService;
-import com.example.cesar.agrosmart.apiBody.addFincaBody;
+import com.example.cesar.agrosmart.apiBody.update.updateEquipoBody;
 import com.example.cesar.agrosmart.models.ApiError;
 import com.example.cesar.agrosmart.models.respuesta.Respuesta;
 
@@ -31,20 +29,26 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class addFincas extends Fragment {
 
-    public static final String TAG = "addfincas";
+public class UpdateEquipo extends Fragment {
 
-    private String jwt;
-    private EditText mNombreView, mTelefonoView, mDireccionView;
+    public static final String TAG = "updateequipo";
+
+    private String jwt, id, nombre, tipo, descripcion;
+    private EditText mNombreView, mTipoView, mDescripcionView;
     private View mFormView, mProgressView;
     private Retrofit retrofit;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null){
-            jwt = getArguments().getString("jwt","vacio");
+        if (getArguments() != null) {
+           jwt=getArguments().getString("jwt", "vacio");
+           id=getArguments().getString("id", "vacio");
+           nombre=getArguments().getString("nombre", "vacio");
+           tipo=getArguments().getString("tipo", "vacio");
+           descripcion=getArguments().getString("descripcion", "vacio");
         }
     }
 
@@ -52,22 +56,25 @@ public class addFincas extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_fincas, container, false);
+        return inflater.inflate(R.layout.fragment_update_equipo, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         mNombreView=view.findViewById(R.id.nombre);
-        mTelefonoView=view.findViewById(R.id.telefono);
-        mDireccionView=view.findViewById(R.id.direccion);
-        Button mGuardarView=view.findViewById(R.id.guardar);
+        mTipoView=view.findViewById(R.id.devicetype);
+        mDescripcionView=view.findViewById(R.id.descripcion);
+        Button mGuardarView = view.findViewById(R.id.guardar);
+
+        mNombreView.setText(nombre);
+        mTipoView.setText(tipo);
+        mDescripcionView.setText(descripcion);
 
         mGuardarView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                guardarFinca();
+                guardarEquipo();
             }
         });
 
@@ -80,33 +87,33 @@ public class addFincas extends Fragment {
                 .build();
     }
 
-    private void guardarFinca(){
+    private void guardarEquipo(){
         mNombreView.setError(null);
-        mTelefonoView.setError(null);
-        mDireccionView.setError(null);
+        mTipoView.setError(null);
+        mDescripcionView.setError(null);
 
-        String nombre = mNombreView.getText().toString();
-        String telefono = mTelefonoView.getText().toString();
-        String direccion = mDireccionView.getText().toString();
+        String nombre=mNombreView.getText().toString();
+        String tipo=mTipoView.getText().toString();
+        String descripcion=mDescripcionView.getText().toString();
 
-        boolean cancel = false;
-        View focusView = null;
+        boolean cancel=false;
+        View focusView=null;
 
         if (TextUtils.isEmpty(nombre)){
             mNombreView.setError(getString(R.string.error_field_required));
-            focusView = mNombreView;
-            cancel = true;
-        }
-
-        if (TextUtils.isEmpty(telefono)){
-            mTelefonoView.setError(getString(R.string.error_field_required));
-            focusView=mTelefonoView;
+            focusView=mNombreView;
             cancel=true;
         }
 
-        if (TextUtils.isEmpty(direccion)){
-            mDireccionView.setError(getString(R.string.error_field_required));
-            focusView=mDireccionView;
+        if (TextUtils.isEmpty(tipo)){
+            mTipoView.setError(getString(R.string.error_field_required));
+            focusView=mTipoView;
+            cancel=true;
+        }
+
+        if (TextUtils.isEmpty(descripcion)){
+            mDescripcionView.setError(getString(R.string.error_field_required));
+            focusView=mDescripcionView;
             cancel=true;
         }
 
@@ -114,9 +121,8 @@ public class addFincas extends Fragment {
             focusView.requestFocus();
         }else {
             showProgress(true);
-
             ApiService service = retrofit.create(ApiService.class);
-            Call<Respuesta> respuestaCall = service.guardarFinca(new addFincaBody(nombre,telefono,direccion,jwt));
+            Call<Respuesta> respuestaCall=service.updateEquipo(new updateEquipoBody(id,nombre,tipo,descripcion,jwt));
 
             respuestaCall.enqueue(new Callback<Respuesta>() {
                 @Override
@@ -144,7 +150,7 @@ public class addFincas extends Fragment {
 
                 @Override
                 public void onFailure(Call<Respuesta> call, Throwable t) {
-
+                    showProgress(false);
                 }
             });
         }
@@ -152,7 +158,7 @@ public class addFincas extends Fragment {
     }
 
     private void showMessage(String message){
-        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getApplicationContext(),message,Toast.LENGTH_SHORT).show();
     }
 
     private void showProgress(final boolean show){

@@ -1,7 +1,11 @@
 package com.example.cesar.agrosmart.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cesar.agrosmart.R;
+import com.example.cesar.agrosmart.admin.update.UpdateUsuario;
 import com.example.cesar.agrosmart.api.ApiService;
 import com.example.cesar.agrosmart.apiBody.deleteBody;
 import com.example.cesar.agrosmart.models.ApiError;
@@ -48,22 +53,26 @@ public class ListaUsuarioAdminAdapter extends RecyclerView.Adapter<ListaUsuarioA
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Usuarios U = dataset.get(position);
-        String nombreApellido = U.getNombre()+" "+U.getApellido();
-        holder.nombreApellido.setText(nombreApellido);
-        holder.email.setText(U.getEmail());
-        switch (U.getNivel()){
-            case "0":{
-                holder.nivel.setText(R.string.administrador);
-            }break;
-            case "1":{
-                holder.nivel.setText(R.string.agronomo);
-            }break;
-            case "2":{
-                holder.nivel.setText(R.string.cliente);
-            }break;
-        }
+        holder.Nombre = U.getNombre();
+        holder.Apellido = U.getApellido();
+        holder.Email = U.getEmail();
+        holder.Nivel = U.getNivel();
         holder.id = U.getId();
         holder.position = holder.getAdapterPosition();
+        String nombreapellido=holder.Nombre+" "+holder.Apellido;
+        holder.mNombreApellidoView.setText(nombreapellido);
+        holder.mEmailView.setText(holder.Email);
+        switch (holder.Nivel){
+            case "0":{
+                holder.mNivelView.setText(R.string.administrador);
+            }break;
+            case "1":{
+                holder.mNivelView.setText(R.string.agronomo);
+            }break;
+            case "2":{
+                holder.mNivelView.setText(R.string.cliente);
+            }break;
+        }
     }
 
     @Override
@@ -80,24 +89,44 @@ public class ListaUsuarioAdminAdapter extends RecyclerView.Adapter<ListaUsuarioA
 
         public static final String TAG = "recycleview";
 
-        private TextView nombreApellido, email, nivel;
+        private TextView mNombreApellidoView, mEmailView, mNivelView;
         private Button borrar;
-        private String id;
+        private String id, Nombre, Apellido, Email, Nivel;
         private int position;
+        private View item;
         Retrofit retrofit;
 
         public ViewHolder(View itemView){
             super(itemView);
 
-            nombreApellido = itemView.findViewById(R.id.UsuarioNombreApellido);
-            email = itemView.findViewById(R.id.UsuarioEmail);
-            nivel = itemView.findViewById(R.id.UsuarioNivel);
+            mNombreApellidoView = itemView.findViewById(R.id.UsuarioNombreApellido);
+            mEmailView = itemView.findViewById(R.id.UsuarioEmail);
+            mNivelView = itemView.findViewById(R.id.UsuarioNivel);
             borrar = itemView.findViewById(R.id.borrarUsuario);
+            item = itemView.findViewById(R.id.item);
 
             borrar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     borrarUsuarios();
+                }
+            });
+
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle=new Bundle();
+                    bundle.putString("jwt", jwt);
+                    bundle.putString("id", id);
+                    bundle.putString("nombre", Nombre);
+                    bundle.putString("apellido", Apellido);
+                    bundle.putString("email", Email);
+                    bundle.putString("nivel", Nivel);
+                    Fragment fragment = new UpdateUsuario();
+                    FragmentTransaction transaction = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
+                    fragment.setArguments(bundle);
+                    transaction.replace(R.id.content_main, fragment).addToBackStack(null);
+                    transaction.commit();
                 }
             });
 

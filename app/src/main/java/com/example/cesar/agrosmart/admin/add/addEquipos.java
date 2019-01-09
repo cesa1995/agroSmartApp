@@ -53,7 +53,6 @@ public class addEquipos extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_add_equipos, container, false);
     }
 
@@ -178,16 +177,6 @@ public class addEquipos extends Fragment {
             }
         });
 
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
-        getActivity().invalidateOptionsMenu();
-        MenuItem item = menu.findItem(R.id.search);
-
-        item.setVisible(false);
     }
 
     public interface OnFragmentInteractionListener {

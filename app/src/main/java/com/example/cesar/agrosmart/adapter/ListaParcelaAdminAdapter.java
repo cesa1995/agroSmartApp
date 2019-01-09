@@ -1,7 +1,11 @@
 package com.example.cesar.agrosmart.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cesar.agrosmart.R;
+import com.example.cesar.agrosmart.admin.update.UpdateParcela;
 import com.example.cesar.agrosmart.api.ApiService;
 import com.example.cesar.agrosmart.apiBody.deleteBody;
 import com.example.cesar.agrosmart.models.ApiError;
@@ -48,10 +53,12 @@ public class ListaParcelaAdminAdapter extends RecyclerView.Adapter<ListaParcelaA
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Parcelas P = dataset.get(position);
-        holder.nombre.setText(P.getNombre());
-        holder.tipo.setText(P.getTipo());
+        holder.nombre=P.getNombre();
+        holder.tipo=P.getTipo();
         holder.id = P.getId();
         holder.position=holder.getAdapterPosition();
+        holder.mNombreView.setText(holder.nombre);
+        holder.mTipoView.setText(holder.tipo);
     }
 
     @Override
@@ -68,17 +75,35 @@ public class ListaParcelaAdminAdapter extends RecyclerView.Adapter<ListaParcelaA
 
         public static final String TAG = "recycleview";
 
-        private TextView nombre, tipo;
-        private String id;
+        private TextView mNombreView, mTipoView;
+        private String id, nombre, tipo;
         private Button borrar;
         private int position;
         Retrofit retrofit;
+        private View item;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            nombre = itemView.findViewById(R.id.nombre);
-            tipo = itemView.findViewById(R.id.tipo);
+            mNombreView = itemView.findViewById(R.id.nombre);
+            mTipoView = itemView.findViewById(R.id.tipo);
             borrar = itemView.findViewById(R.id.borrarParcela);
+            item=itemView.findViewById(R.id.item);
+
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle=new Bundle();
+                    bundle.putString("id", id);
+                    bundle.putString("jwt", jwt);
+                    bundle.putString("nombre", nombre);
+                    bundle.putString("tipo", tipo);
+                    Fragment fragment = new UpdateParcela();
+                    FragmentTransaction transaction=((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
+                    fragment.setArguments(bundle);
+                    transaction.replace(R.id.content_main, fragment).addToBackStack(null);
+                    transaction.commit();
+                }
+            });
 
             borrar.setOnClickListener(new View.OnClickListener() {
                 @Override

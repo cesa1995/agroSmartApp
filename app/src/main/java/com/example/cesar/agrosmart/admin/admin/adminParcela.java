@@ -11,6 +11,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -47,6 +49,7 @@ public class adminParcela extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if(getArguments() != null){
             jwt = getArguments().getString("jwt", "vacio");
         }
@@ -127,6 +130,15 @@ public class adminParcela extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        MenuItem item = menu.findItem(R.id.search);
+
+        item.setVisible(true);
     }
 
     public interface OnFragmentInteractionListener {

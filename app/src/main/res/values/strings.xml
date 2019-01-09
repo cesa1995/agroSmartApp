@@ -47,6 +47,8 @@
     <string name="Direccion">Dirección</string>
     <string name="tipo_de_dispositivo">Tipo de Dispositivo</string>
     <string name="descripcion">Descripcion</string>
+    <string name="nueva_pass">Ingrese la nueva Contraseña</string>
+    <string name="repita_nueva_pass">Repita la nueva Contraseña</string>
 
     <string name="guardar">Guardar</string>
 
@@ -54,6 +56,11 @@
     <string name="titulo_add_parcela">Agregue una Nueva Parcela</string>
     <string name="titulo_add_finca">Agregue una Nueva Finca</string>
     <string name="titulo_add_equipo">Agregue un Nuevo Equipo</string>
+    <string name="titulo_update_usuario">Actualice el usuario</string>
+    <string name="titulo_update_usuariopass">Actualice la contraseña</string>
+    <string name="titulo_update_equipo">Actualice el equipo</string>
+    <string name="titulo_update_parcela">Actualice la parcela</string>
+    <string name="cambiar_pass">¿Quieres cambiar la contraseña?</string>
 
     <string name="nombre_no_valido">Nombre no valido</string>
 

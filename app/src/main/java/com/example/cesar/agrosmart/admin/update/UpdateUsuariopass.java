@@ -1,4 +1,4 @@
-package com.example.cesar.agrosmart.admin.add;
+package com.example.cesar.agrosmart.admin.update;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.example.cesar.agrosmart.R;
 import com.example.cesar.agrosmart.api.ApiService;
-import com.example.cesar.agrosmart.apiBody.addFincaBody;
+import com.example.cesar.agrosmart.apiBody.update.updateUsuariopassBody;
 import com.example.cesar.agrosmart.models.ApiError;
 import com.example.cesar.agrosmart.models.respuesta.Respuesta;
 
@@ -31,20 +31,21 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class addFincas extends Fragment {
+public class UpdateUsuariopass extends Fragment {
 
-    public static final String TAG = "addfincas";
+    public static final String TAG = "updatepass";
 
-    private String jwt;
-    private EditText mNombreView, mTelefonoView, mDireccionView;
+    private String jwt, id;
+    private EditText mNewpassView, mNewpassrepiteView;
     private View mFormView, mProgressView;
     private Retrofit retrofit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null){
-            jwt = getArguments().getString("jwt","vacio");
+        if (getArguments() != null) {
+            jwt = getArguments().getString("jwt", "vacio");
+            id = getArguments().getString("id", "vacio");
         }
     }
 
@@ -52,71 +53,60 @@ public class addFincas extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_fincas, container, false);
+        return inflater.inflate(R.layout.fragment_update_usuariopass, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mNombreView=view.findViewById(R.id.nombre);
-        mTelefonoView=view.findViewById(R.id.telefono);
-        mDireccionView=view.findViewById(R.id.direccion);
-        Button mGuardarView=view.findViewById(R.id.guardar);
+        mNewpassView = view.findViewById(R.id.newpass);
+        mNewpassrepiteView = view.findViewById(R.id.repetirnewpass);
+        Button mGuardarView = view.findViewById(R.id.guardar);
 
         mGuardarView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                guardarFinca();
+                guardarpass();
             }
         });
 
-        mFormView=view.findViewById(R.id.form);
-        mProgressView=view.findViewById(R.id.progress);
+        mFormView = view.findViewById(R.id.form);
+        mProgressView = view.findViewById(R.id.progress);
 
-        retrofit=new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.0.107/agroSmart/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 
-    private void guardarFinca(){
-        mNombreView.setError(null);
-        mTelefonoView.setError(null);
-        mDireccionView.setError(null);
+    private void guardarpass(){
+        mNewpassView.setError(null);
+        mNewpassrepiteView.setError(null);
 
-        String nombre = mNombreView.getText().toString();
-        String telefono = mTelefonoView.getText().toString();
-        String direccion = mDireccionView.getText().toString();
+        String newpass=mNewpassView.getText().toString();
+        String newpassrepite=mNewpassrepiteView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        if (TextUtils.isEmpty(nombre)){
-            mNombreView.setError(getString(R.string.error_field_required));
-            focusView = mNombreView;
+        if (TextUtils.isEmpty(newpass)){
+            mNewpassView.setError(getString(R.string.error_field_required));
+            focusView = mNewpassView;
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(telefono)){
-            mTelefonoView.setError(getString(R.string.error_field_required));
-            focusView=mTelefonoView;
-            cancel=true;
-        }
-
-        if (TextUtils.isEmpty(direccion)){
-            mDireccionView.setError(getString(R.string.error_field_required));
-            focusView=mDireccionView;
-            cancel=true;
+        if (TextUtils.isEmpty(newpassrepite)){
+            mNewpassrepiteView.setError(getString(R.string.error_field_required));
+            focusView = mNewpassrepiteView;
+            cancel = true;
         }
 
         if (cancel){
             focusView.requestFocus();
         }else {
             showProgress(true);
-
             ApiService service = retrofit.create(ApiService.class);
-            Call<Respuesta> respuestaCall = service.guardarFinca(new addFincaBody(nombre,telefono,direccion,jwt));
+            Call<Respuesta> respuestaCall = service.updateUsuariopass(new updateUsuariopassBody(id, newpass, newpassrepite, jwt));
 
             respuestaCall.enqueue(new Callback<Respuesta>() {
                 @Override
@@ -148,11 +138,10 @@ public class addFincas extends Fragment {
                 }
             });
         }
-
     }
 
     private void showMessage(String message){
-        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getApplicationContext(),message,Toast.LENGTH_SHORT).show();
     }
 
     private void showProgress(final boolean show){
@@ -182,4 +171,5 @@ public class addFincas extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }
