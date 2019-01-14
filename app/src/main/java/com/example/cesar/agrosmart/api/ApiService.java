@@ -8,6 +8,7 @@ import com.example.cesar.agrosmart.apiBody.deleteBody;
 import com.example.cesar.agrosmart.apiBody.jwtOnlyBody;
 import com.example.cesar.agrosmart.apiBody.loginBody;
 import com.example.cesar.agrosmart.apiBody.update.updateEquipoBody;
+import com.example.cesar.agrosmart.apiBody.update.updateFincaBody;
 import com.example.cesar.agrosmart.apiBody.update.updateParcelaBody;
 import com.example.cesar.agrosmart.apiBody.update.updateUsuarioBody;
 import com.example.cesar.agrosmart.apiBody.update.updateUsuariopassBody;
@@ -74,4 +75,7 @@ public interface ApiService {
 
     @POST("parcelas/update.php")
     Call<Respuesta>updateParcela(@Body updateParcelaBody updateParcelaBody);
+
+    @POST("fincas/update.php")
+    Call<Respuesta>updateFinca(@Body updateFincaBody updateFincaBody);
 }

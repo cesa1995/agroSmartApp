@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,11 +19,15 @@ import java.util.ArrayList;
 public class ListaFincasIndexAdapter extends RecyclerView.Adapter<ListaFincasIndexAdapter.ViewHolder> {
 
     private ArrayList<Fincas> dataset;
+    private ArrayList<Fincas> datasetFiltered;
+    private String jwt;
     private Context context;
 
-    public ListaFincasIndexAdapter(Context context){
+    public ListaFincasIndexAdapter(Context context, String jwt){
         this.context = context;
+        this.jwt = jwt;
         dataset = new ArrayList<>();
+        datasetFiltered = new ArrayList<>();
     }
 
     @NonNull
@@ -34,7 +39,7 @@ public class ListaFincasIndexAdapter extends RecyclerView.Adapter<ListaFincasInd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Fincas f = dataset.get(position);
+        Fincas f = datasetFiltered.get(position);
         holder.fincaNombre.setText(f.getNombre());
         holder.fincaTelefono.setText(f.getTelefono());
         holder.fincaDireccion.setText(f.getDireccion());
@@ -43,18 +48,49 @@ public class ListaFincasIndexAdapter extends RecyclerView.Adapter<ListaFincasInd
 
     @Override
     public int getItemCount() {
-        return dataset.size();
+        return datasetFiltered.size();
     }
 
     public void adicionarListaFincas(ArrayList<Fincas> listaFincas){
         dataset.addAll(listaFincas);
+        datasetFiltered = dataset;
         notifyDataSetChanged();
+    }
+
+    public Filter getFilter(){
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString=constraint.toString();
+                if (charString.isEmpty()){
+                    datasetFiltered=dataset;
+                }else{
+                    ArrayList<Fincas> filteredList = new ArrayList<>();
+                    for(Fincas row:dataset){
+                        if (row.getNombre().toLowerCase().contains(charString.toLowerCase())||
+                                row.getDireccion().toLowerCase().contains(charString.toLowerCase())||
+                                row.getTelefono().toLowerCase().contains(charString.toLowerCase())){
+                            filteredList.add(row);
+                        }
+                    }
+                    datasetFiltered=filteredList;
+                }
+                FilterResults filterResults=new FilterResults();
+                filterResults.values=datasetFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                datasetFiltered=(ArrayList<Fincas>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView fincaNombre, fincaTelefono, fincaDireccion;
-        private Button equipos, usuarios;
         private String id;
 
         public ViewHolder(View itemView){
@@ -63,27 +99,7 @@ public class ListaFincasIndexAdapter extends RecyclerView.Adapter<ListaFincasInd
             fincaNombre = itemView.findViewById(R.id.fincaNonmbre);
             fincaTelefono = itemView.findViewById(R.id.fincaTelefono);
             fincaDireccion = itemView.findViewById(R.id.fincaDireccion);
-
-            equipos = itemView.findViewById(R.id.equipos);
-            usuarios = itemView.findViewById(R.id.usuarios);
-
-            equipos = itemView.findViewById(R.id.equipos);
-            usuarios = itemView.findViewById(R.id.usuarios);
-
-            equipos.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context,id,Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            usuarios.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context,id,Toast.LENGTH_SHORT).show();
-
-                }
-            });
+            
         }
 
     }

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -57,7 +58,7 @@ public class IndexAdmin extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView recyclerView=view.findViewById(R.id.recyclerView);
-        listaFincasIndexAdapter = new ListaFincasIndexAdapter(getContext());
+        listaFincasIndexAdapter = new ListaFincasIndexAdapter(getContext(), jwt);
         recyclerView.setAdapter(listaFincasIndexAdapter);
         recyclerView.setHasFixedSize(true);
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(),1);
@@ -94,10 +95,25 @@ public class IndexAdmin extends Fragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Search");
 
-        MenuItem item = menu.findItem(R.id.search);
-        item.setVisible(true);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                listaFincasIndexAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                listaFincasIndexAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        searchItem.setVisible(true);
+        super.onPrepareOptionsMenu(menu);
     }
 
     public interface OnFragmentInteractionListener {

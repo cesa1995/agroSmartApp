@@ -1,17 +1,24 @@
 package com.example.cesar.agrosmart.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cesar.agrosmart.R;
+import com.example.cesar.agrosmart.admin.update.UpdateFinca;
 import com.example.cesar.agrosmart.api.ApiService;
 import com.example.cesar.agrosmart.apiBody.deleteBody;
 import com.example.cesar.agrosmart.models.ApiError;
@@ -29,12 +36,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ListaFincasAdminAdapter extends RecyclerView.Adapter<ListaFincasAdminAdapter.ViewHolder> {
 
     private ArrayList<Fincas> dataset;
+    private ArrayList<Fincas> datasetFiltered;
     private Context context;
     private String jwt;
 
     public ListaFincasAdminAdapter(Context context, String jwt){
         this.context=context;
         this.jwt=jwt;
+        datasetFiltered = new ArrayList<>();
         dataset = new ArrayList<>();
     }
 
@@ -47,41 +56,95 @@ public class ListaFincasAdminAdapter extends RecyclerView.Adapter<ListaFincasAdm
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Fincas F = dataset.get(position);
-        holder.nombre.setText(F.getNombre());
-        holder.telefono.setText(F.getTelefono());
-        holder.direccion.setText(F.getDireccion());
+        Fincas F = datasetFiltered.get(position);
+        holder.nombre=F.getNombre();
+        holder.telefono=F.getTelefono();
+        holder.direccion=F.getDireccion();
         holder.id = F.getId();
         holder.position = holder.getAdapterPosition();
+        holder.mNombreView.setText(holder.nombre);
+        holder.mTelefonoView.setText(holder.telefono);
+        holder.mDireccionView.setText(holder.direccion);
     }
 
     @Override
     public int getItemCount() {
-        return dataset.size();
+        return datasetFiltered.size();
     }
 
     public void adicionarListaFincas(ArrayList<Fincas> listaFincas){
         dataset.addAll(listaFincas);
+        datasetFiltered=dataset;
         notifyDataSetChanged();
+    }
+
+    public Filter getFilter(){
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString=constraint.toString();
+                if (charString.isEmpty()){
+                    datasetFiltered=dataset;
+                }else{
+                    ArrayList<Fincas> filteredList = new ArrayList<>();
+                    for(Fincas row:dataset){
+                        if (row.getNombre().toLowerCase().contains(charString.toLowerCase())||
+                                row.getTelefono().toLowerCase().contains(charString.toLowerCase())||
+                                row.getDireccion().toLowerCase().contains(charString.toLowerCase())){
+                            filteredList.add(row);
+                        }
+                    }
+                    datasetFiltered=filteredList;
+                }
+                FilterResults filterResults=new FilterResults();
+                filterResults.values=datasetFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                datasetFiltered= (ArrayList<Fincas>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public static final String TAG = "recycleview";
 
-        private TextView nombre, telefono, direccion;
+        private String id, nombre, telefono, direccion;
         private Button borrar;
-        private String id;
+        private TextView mNombreView, mTelefonoView, mDireccionView;
         private int position;
         Retrofit retrofit;
+        private View item;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            nombre = itemView.findViewById(R.id.nombre);
-            telefono = itemView.findViewById(R.id.telefono);
-            direccion = itemView.findViewById(R.id.direccion);
+            mNombreView = itemView.findViewById(R.id.nombre);
+            mTelefonoView = itemView.findViewById(R.id.telefono);
+            mDireccionView = itemView.findViewById(R.id.direccion);
             borrar = itemView.findViewById(R.id.borrarFincas);
+            item=itemView.findViewById(R.id.item);
+
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("jwt", jwt);
+                    bundle.putString("id", id);
+                    bundle.putString("nombre", nombre);
+                    bundle.putString("telefono", telefono);
+                    bundle.putString("direccion", direccion);
+                    Fragment fragment = new UpdateFinca();
+                    FragmentTransaction transaction = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
+                    fragment.setArguments(bundle);
+                    transaction.replace(R.id.content_main, fragment).addToBackStack(null);
+                    transaction.commit();
+                }
+            });
 
             borrar.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.example.cesar.agrosmart.models.respuesta.Respuesta;
 import com.example.cesar.agrosmart.models.usuarios.Usuarios;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ListaUsuarioAdminAdapter extends RecyclerView.Adapter<ListaUsuarioAdminAdapter.ViewHolder> {
 
     private ArrayList<Usuarios> dataset;
+    private ArrayList<Usuarios> datasetFiltered;
     private Context context;
     private String jwt;
 
@@ -41,6 +44,7 @@ public class ListaUsuarioAdminAdapter extends RecyclerView.Adapter<ListaUsuarioA
         this.context = context;
         this.jwt = jwt;
         dataset = new ArrayList<>();
+        datasetFiltered = new ArrayList<>();
     }
 
     @NonNull
@@ -52,7 +56,7 @@ public class ListaUsuarioAdminAdapter extends RecyclerView.Adapter<ListaUsuarioA
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Usuarios U = dataset.get(position);
+        Usuarios U = datasetFiltered.get(position);
         holder.Nombre = U.getNombre();
         holder.Apellido = U.getApellido();
         holder.Email = U.getEmail();
@@ -77,12 +81,44 @@ public class ListaUsuarioAdminAdapter extends RecyclerView.Adapter<ListaUsuarioA
 
     @Override
     public int getItemCount() {
-        return dataset.size();
+        return datasetFiltered.size();
     }
 
     public void adicionarListaUsuarios(ArrayList<Usuarios> listaUsuarios){
         dataset.addAll(listaUsuarios);
+        datasetFiltered = dataset;
         notifyDataSetChanged();
+    }
+
+    public Filter getFilter(){
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()) {
+                    datasetFiltered = dataset;
+                }else{
+                    ArrayList<Usuarios> filteredList = new ArrayList<>();
+                    for(Usuarios row : dataset){
+                        if (row.getNombre().toLowerCase().contains(charString.toLowerCase()) ||
+                                row.getApellido().toLowerCase().contains(charString.toLowerCase())||
+                                row.getEmail().toLowerCase().contains(charString.toLowerCase())){
+                            filteredList.add(row);
+                        }
+                    }
+                    datasetFiltered = filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = datasetFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                datasetFiltered = (ArrayList<Usuarios>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

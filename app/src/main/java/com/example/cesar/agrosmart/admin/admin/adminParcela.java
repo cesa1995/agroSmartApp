@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -134,11 +135,25 @@ public class adminParcela extends Fragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Search");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                listaParcelaAdminAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                listaParcelaAdminAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        searchItem.setVisible(true);
         super.onPrepareOptionsMenu(menu);
-
-        MenuItem item = menu.findItem(R.id.search);
-
-        item.setVisible(true);
     }
 
     public interface OnFragmentInteractionListener {

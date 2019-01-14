@@ -20,7 +20,6 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.cesar.agrosmart.admin.Index.IndexAdmin;
-import com.example.cesar.agrosmart.admin.ListasGenerales.fincasListaGetID;
 import com.example.cesar.agrosmart.admin.admin.adminConfiEquipos;
 import com.example.cesar.agrosmart.admin.admin.adminEquipos;
 import com.example.cesar.agrosmart.admin.admin.adminFincas;
@@ -30,8 +29,6 @@ import com.example.cesar.agrosmart.agrono.IndexAgrono;
 import com.example.cesar.agrosmart.client.IndexClient;
 import com.example.cesar.agrosmart.interfaces.IFragments;
 import com.example.cesar.agrosmart.session.sessionPrefs;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,IFragments {
@@ -76,28 +73,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater  = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
-
-        final MenuItem searchItem = menu.findItem(R.id.search);
-        final SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint(getText(R.string.search));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, "hola",Toast.LENGTH_SHORT).show();
-                searchView.setQuery("",false);
-                searchView.setIconified(true);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
         return true;
     }
 
@@ -109,9 +89,11 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(getApplicationContext(),LoginActivity.class));
                 finish();
             }break;
+            case R.id.search:{
+                return true;
+            }
         }
-
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     private Bundle bundle(){

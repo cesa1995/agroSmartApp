@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ListaEquiposAdminAdapter extends RecyclerView.Adapter<ListaEquiposAdminAdapter.ViewHolder>{
 
     private ArrayList<Equipos> dataset;
+    private ArrayList<Equipos> datasetFiltered;
     private Context context;
     private String jwt;
 
@@ -41,6 +43,7 @@ public class ListaEquiposAdminAdapter extends RecyclerView.Adapter<ListaEquiposA
         this.context = context;
         this.jwt=jwt;
         dataset = new ArrayList<>();
+        datasetFiltered=new ArrayList<>();
     }
 
 
@@ -53,7 +56,7 @@ public class ListaEquiposAdminAdapter extends RecyclerView.Adapter<ListaEquiposA
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Equipos E = dataset.get(position);
+        Equipos E = datasetFiltered.get(position);
         holder.nombre=E.getNombre();
         holder.tipo=E.getDevicetype();
         holder.descripcion=E.getDescripcion();
@@ -66,12 +69,43 @@ public class ListaEquiposAdminAdapter extends RecyclerView.Adapter<ListaEquiposA
 
     @Override
     public int getItemCount() {
-        return dataset.size();
+        return datasetFiltered.size();
     }
 
     public void adicionarListaEquipos(ArrayList<Equipos> listaEquipos){
         dataset.addAll(listaEquipos);
+        datasetFiltered = dataset;
         notifyDataSetChanged();
+    }
+
+    public Filter getFilter(){
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()){
+                    datasetFiltered = dataset;
+                }else{
+                    ArrayList<Equipos> filteredList=new ArrayList<>();
+                    for(Equipos row:dataset){
+                        if (row.getNombre().toLowerCase().contains(charString.toLowerCase())||
+                                row.getDevicetype().toLowerCase().contains(charString.toLowerCase())){
+                            filteredList.add(row);
+                        }
+                    }
+                    datasetFiltered=filteredList;
+                }
+                FilterResults filterResults=new FilterResults();
+                filterResults.values=datasetFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                datasetFiltered=(ArrayList<Equipos>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

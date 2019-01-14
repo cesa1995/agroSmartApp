@@ -60,6 +60,7 @@
     <string name="titulo_update_usuariopass">Actualice la contraseña</string>
     <string name="titulo_update_equipo">Actualice el equipo</string>
     <string name="titulo_update_parcela">Actualice la parcela</string>
+    <string name="titulo_update_finca">Actualice la finca</string>
     <string name="cambiar_pass">¿Quieres cambiar la contraseña?</string>
 
     <string name="nombre_no_valido">Nombre no valido</string>
