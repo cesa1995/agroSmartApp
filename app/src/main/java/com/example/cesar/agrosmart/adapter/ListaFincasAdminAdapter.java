@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +49,7 @@ public class ListaFincasAdminAdapter extends RecyclerView.Adapter<ListaFincasAdm
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_admin_fincas,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_item_admin_fincas,parent,false);
         return new ViewHolder(view);
     }
 

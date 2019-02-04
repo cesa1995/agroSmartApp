@@ -1,6 +1,5 @@
 package com.example.cesar.agrosmart.admin.admin;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +20,7 @@ public class adminConfiEquipos extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_confi_equipos, container, false);
+        return inflater.inflate(R.layout.admin_fragment_admin_confi_equipos, container, false);
     }
 
     public interface OnFragmentInteractionListener {

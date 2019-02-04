@@ -19,9 +19,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.cesar.agrosmart.R;
-import com.example.cesar.agrosmart.adapter.ListaEquiposAdminAdapter;
+import com.example.cesar.agrosmart.adapter.ListaEquipoAdminAdapter;
 import com.example.cesar.agrosmart.admin.add.addEquipos;
-import com.example.cesar.agrosmart.admin.add.addParcelas;
 import com.example.cesar.agrosmart.api.ApiService;
 import com.example.cesar.agrosmart.apiBody.jwtOnlyBody;
 import com.example.cesar.agrosmart.models.ApiError;
@@ -44,7 +43,7 @@ public class adminEquipos extends Fragment {
 
     private String jwt;
 
-    private ListaEquiposAdminAdapter listaEquiposAdminAdapter;
+    private ListaEquipoAdminAdapter listaEquipoAdminAdapter;
 
     FloatingActionButton addequipos;
 
@@ -61,7 +60,7 @@ public class adminEquipos extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_equipos, container, false);
+        return inflater.inflate(R.layout.admin_fragment_admin_equipos, container, false);
     }
 
     @Override
@@ -71,8 +70,8 @@ public class adminEquipos extends Fragment {
         addequipos = view.findViewById(R.id.addEquipos);
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        listaEquiposAdminAdapter = new ListaEquiposAdminAdapter(getContext(),jwt);
-        recyclerView.setAdapter(listaEquiposAdminAdapter);
+        listaEquipoAdminAdapter = new ListaEquipoAdminAdapter(getContext(),jwt);
+        recyclerView.setAdapter(listaEquipoAdminAdapter);
         recyclerView.setHasFixedSize(true);
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(layoutManager);
@@ -123,7 +122,7 @@ public class adminEquipos extends Fragment {
                 }
                 ReadEquiposRespuesta readEquiposRespuesta = response.body();
                 ArrayList<Equipos> listaEquipos = readEquiposRespuesta.getRecords();
-                listaEquiposAdminAdapter.adicionarListaEquipos(listaEquipos);
+                listaEquipoAdminAdapter.adicionarListaEquipos(listaEquipos);
             }
 
             @Override
@@ -142,13 +141,13 @@ public class adminEquipos extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                listaEquiposAdminAdapter.getFilter().filter(query);
+                listaEquipoAdminAdapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                listaEquiposAdminAdapter.getFilter().filter(newText);
+                listaEquipoAdminAdapter.getFilter().filter(newText);
                 return false;
             }
         });

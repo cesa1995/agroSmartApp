@@ -8,13 +8,13 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include layout="@layout/content_main"/>
+    <include layout="@layout/admin_content_main"/>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header_main" />
+        app:headerLayout="@layout/admin_nav_header_main" />
 
 </android.support.v4.widget.DrawerLayout>

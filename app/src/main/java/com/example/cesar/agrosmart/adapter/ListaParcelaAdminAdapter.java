@@ -23,7 +23,6 @@ import com.example.cesar.agrosmart.apiBody.deleteBody;
 import com.example.cesar.agrosmart.models.ApiError;
 import com.example.cesar.agrosmart.models.parcelas.Parcelas;
 import com.example.cesar.agrosmart.models.respuesta.Respuesta;
-import com.example.cesar.agrosmart.models.usuarios.Usuarios;
 
 import java.util.ArrayList;
 
@@ -50,7 +49,7 @@ public class ListaParcelaAdminAdapter extends RecyclerView.Adapter<ListaParcelaA
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_admin_parcelas,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_item_admin_parcelas,parent,false);
         return new ViewHolder(view);
     }
 

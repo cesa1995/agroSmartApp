@@ -3,9 +3,12 @@
     android:shape="rectangle">
 
     <size android:width="100dp"
-        android:height="50dp"/>
+        android:height="100dp"/>
 
-    <corners android:bottomLeftRadius="100dp"/>
+    <corners android:bottomLeftRadius="100dp"
+        android:bottomRightRadius="100dp"
+        android:topRightRadius="100dp"
+        android:topLeftRadius="100dp"/>
 
     <padding android:bottom="0dp"
         android:left="0dp"

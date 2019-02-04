@@ -57,20 +57,22 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
-
-        <Button
-            android:id="@+id/borrarFincas"
-            android:background="@drawable/button_select_up"
-            android:layout_width="60dp"
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="50dp"
             android:layout_height="50dp"
-            android:paddingLeft="10dp"
-            android:paddingStart="10dp"
-            android:paddingRight="0dp"
-            android:paddingEnd="0dp"
-            android:paddingTop="5dp"
-            android:drawableTop="@drawable/ic_remove"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/borrarFincas"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:paddingTop="11dp"
+                android:background="@drawable/button_select_up"
+                android:drawableTop="@drawable/ic_remove" />
+        </RelativeLayout>
 
     </RelativeLayout>
 </LinearLayout>

@@ -41,7 +41,7 @@ public class adminParcela extends Fragment {
 
     private Retrofit retrofit;
 
-    private String jwt,id;
+    private String jwt;
 
     private ListaParcelaAdminAdapter listaParcelaAdminAdapter;
 
@@ -61,7 +61,7 @@ public class adminParcela extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_parcela, container, false);
+        return inflater.inflate(R.layout.admin_fragment_admin_parcela, container, false);
     }
 
     @Override

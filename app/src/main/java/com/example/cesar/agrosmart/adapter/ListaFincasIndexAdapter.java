@@ -1,17 +1,20 @@
 package com.example.cesar.agrosmart.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.cesar.agrosmart.R;
+import com.example.cesar.agrosmart.admin.asociar.adminAsociarParcela;
 import com.example.cesar.agrosmart.models.fincas.Fincas;
 
 import java.util.ArrayList;
@@ -33,14 +36,15 @@ public class ListaFincasIndexAdapter extends RecyclerView.Adapter<ListaFincasInd
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_index_finca,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_item_index_finca,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Fincas f = datasetFiltered.get(position);
-        holder.fincaNombre.setText(f.getNombre());
+        holder.finca=f.getNombre();
+        holder.fincaNombre.setText(holder.finca);
         holder.fincaTelefono.setText(f.getTelefono());
         holder.fincaDireccion.setText(f.getDireccion());
         holder.id = f.getId();
@@ -91,7 +95,8 @@ public class ListaFincasIndexAdapter extends RecyclerView.Adapter<ListaFincasInd
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView fincaNombre, fincaTelefono, fincaDireccion;
-        private String id;
+        private String id, finca;
+        private View item;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -99,6 +104,22 @@ public class ListaFincasIndexAdapter extends RecyclerView.Adapter<ListaFincasInd
             fincaNombre = itemView.findViewById(R.id.fincaNonmbre);
             fincaTelefono = itemView.findViewById(R.id.fincaTelefono);
             fincaDireccion = itemView.findViewById(R.id.fincaDireccion);
+            item=itemView.findViewById(R.id.item);
+
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle=new Bundle();
+                    bundle.putString("idfinca", id);
+                    bundle.putString("jwt", jwt);
+                    bundle.putString("finca", finca);
+                    Fragment fragment = new adminAsociarParcela();
+                    FragmentTransaction transaction=((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
+                    fragment.setArguments(bundle);
+                    transaction.replace(R.id.content_main, fragment).addToBackStack(null);
+                    transaction.commit();
+                }
+            });
             
         }
 

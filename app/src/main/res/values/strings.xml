@@ -24,11 +24,11 @@
     <string name="Equipos">Equipos</string>
     <string name="Usuarios">Usuarios</string>
 
-    <string name="inicio">Inicio</string>
+    <string name="vincular">Vincular</string>
     <string name="fincas">Fincas</string>
-    <string name="parcela">Parcela</string>
+    <string name="parcela">Parcelas</string>
     <string name="equipo">Equipos</string>
-    <string name="usuario">Usuario</string>
+    <string name="usuario">Usuarios</string>
     <string name="configurar_equipo">Configurar Equipo</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -62,8 +62,19 @@
     <string name="titulo_update_parcela">Actualice la parcela</string>
     <string name="titulo_update_finca">Actualice la finca</string>
     <string name="cambiar_pass">¿Quieres cambiar la contraseña?</string>
+    <string name="titulo_index">Elija la Finca a vincular</string>
+    <string name="titulo_asociar_equipos">Administre los Equipos de la Parcela</string>
+    <string name="titulo_asociar_parcelas">Administre las Parcelas de la Finca</string>
+    <string name="titulo_asociar_usuarios">Administre los Usuarios de la parcela</string>
+    <string name="titulo_equipo">Administre los Equipos</string>
+    <string name="titulo_finca">Administre las Fincas</string>
+    <string name="titulo_usuario">Administre los Usuarios</string>
+    <string name="titulo_parcela">Administre las Parcelas</string>
 
     <string name="nombre_no_valido">Nombre no valido</string>
+
+    <string name="activo">Activo</string>
+    <string name="bloqueado">Bloqueado</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

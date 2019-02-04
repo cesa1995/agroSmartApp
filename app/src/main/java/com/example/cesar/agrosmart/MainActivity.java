@@ -16,8 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.cesar.agrosmart.admin.Index.IndexAdmin;
 import com.example.cesar.agrosmart.admin.admin.adminConfiEquipos;
@@ -41,7 +39,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.admin_activity_main);
 
         bundle = bundle();
 

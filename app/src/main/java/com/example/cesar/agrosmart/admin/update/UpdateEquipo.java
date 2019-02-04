@@ -2,7 +2,6 @@ package com.example.cesar.agrosmart.admin.update;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -56,7 +55,7 @@ public class UpdateEquipo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_update_equipo, container, false);
+        return inflater.inflate(R.layout.admin_fragment_update_equipo, container, false);
     }
 
     @Override

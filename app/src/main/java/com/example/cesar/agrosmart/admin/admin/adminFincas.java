@@ -16,13 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.cesar.agrosmart.R;
 import com.example.cesar.agrosmart.adapter.ListaFincasAdminAdapter;
 import com.example.cesar.agrosmart.admin.add.addFincas;
-import com.example.cesar.agrosmart.admin.add.addParcelas;
 import com.example.cesar.agrosmart.api.ApiService;
 import com.example.cesar.agrosmart.apiBody.jwtOnlyBody;
 import com.example.cesar.agrosmart.models.ApiError;
@@ -62,7 +60,7 @@ public class adminFincas extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_fincas, container, false);
+        return inflater.inflate(R.layout.admin_fragment_admin_fincas, container, false);
     }
 
     @Override

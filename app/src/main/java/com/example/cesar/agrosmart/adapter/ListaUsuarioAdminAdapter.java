@@ -25,7 +25,6 @@ import com.example.cesar.agrosmart.models.respuesta.Respuesta;
 import com.example.cesar.agrosmart.models.usuarios.Usuarios;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,7 +49,7 @@ public class ListaUsuarioAdminAdapter extends RecyclerView.Adapter<ListaUsuarioA
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_admin_usuarios,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_item_admin_usuarios,parent,false);
         return new ViewHolder(view);
     }
 
