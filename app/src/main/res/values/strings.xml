@@ -24,12 +24,18 @@
     <string name="Equipos">Equipos</string>
     <string name="Usuarios">Usuarios</string>
 
+    <string name="comentarios">Comentarios</string>
+    <string name="tareas">Tareas</string>
+    <string name="datos">Datos</string>
     <string name="vincular">Vincular</string>
     <string name="fincas">Fincas</string>
     <string name="parcela">Parcelas</string>
     <string name="equipo">Equipos</string>
     <string name="usuario">Usuarios</string>
+    <string name="dashboard">Dashboard</string>
     <string name="configurar_equipo">Configurar Equipo</string>
+    <string name="nueva_seleccion_finca">Seleccionar una nueva finca</string>
+    <string name="perfil">Perfil</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -70,6 +76,11 @@
     <string name="titulo_finca">Administre las Fincas</string>
     <string name="titulo_usuario">Administre los Usuarios</string>
     <string name="titulo_parcela">Administre las Parcelas</string>
+    <string name="titulo_vincular">Vincule los elemetos de una finca</string>
+    <string name="titulo_comentario">Leer y escribir comentarios a la parcela</string>
+    <string name="titulo_tarea">Leer las Tareas recomendadas a la parcela</string>
+    <string name="titulo_datos">Ver datos de los Equipos</string>
+    <string name="chose_finca">Elija la finca a Visualizar</string>
 
     <string name="nombre_no_valido">Nombre no valido</string>
 

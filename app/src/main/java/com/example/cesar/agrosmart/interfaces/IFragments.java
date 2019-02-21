@@ -1,6 +1,6 @@
 package com.example.cesar.agrosmart.interfaces;
 
-import com.example.cesar.agrosmart.admin.Index.IndexAdmin;
+import com.example.cesar.agrosmart.admin.asociar.adminAsociarFinca;
 import com.example.cesar.agrosmart.admin.add.addEquipos;
 import com.example.cesar.agrosmart.admin.add.addFincas;
 import com.example.cesar.agrosmart.admin.add.addParcelas;
@@ -20,7 +20,7 @@ import com.example.cesar.agrosmart.admin.update.UpdateUsuario;
 import com.example.cesar.agrosmart.admin.update.UpdateUsuariopass;
 
 public interface IFragments extends
-        IndexAdmin.OnFragmentInteractionListener,
+        adminAsociarFinca.OnFragmentInteractionListener,
         adminFincas.OnFragmentInteractionListener,
         adminUsuarios.OnFragmentInteractionListener,
         adminEquipos.OnFragmentInteractionListener,

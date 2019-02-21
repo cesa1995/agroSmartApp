@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.cesar.agrosmart.R;
-import com.example.cesar.agrosmart.adapter.ListaEquipoAdminAdapter;
+import com.example.cesar.agrosmart.admin.adapter.ListaEquipoAdminAdapter;
 import com.example.cesar.agrosmart.admin.add.addEquipos;
 import com.example.cesar.agrosmart.api.ApiService;
 import com.example.cesar.agrosmart.apiBody.jwtOnlyBody;

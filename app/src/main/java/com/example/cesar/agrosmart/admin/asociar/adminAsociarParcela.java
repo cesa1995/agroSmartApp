@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cesar.agrosmart.R;
-import com.example.cesar.agrosmart.adapter.ListaParcelaAsociarAdapter;
+import com.example.cesar.agrosmart.admin.adapter.ListaParcelaAsociarAdapter;
 import com.example.cesar.agrosmart.api.ApiService;
 import com.example.cesar.agrosmart.apiBody.asociar.AddAsociarParcelaBody;
 import com.example.cesar.agrosmart.apiBody.asociar.ReadAsociarParcelaBody;

@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.cesar.agrosmart.R;
 import com.example.cesar.agrosmart.api.ApiService;
-import com.example.cesar.agrosmart.apiBody.addEquipoBody;
+import com.example.cesar.agrosmart.apiBody.add.addEquipoBody;
 import com.example.cesar.agrosmart.models.ApiError;
 import com.example.cesar.agrosmart.models.respuesta.Respuesta;
 

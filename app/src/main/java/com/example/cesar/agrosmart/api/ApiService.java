@@ -1,15 +1,16 @@
 package com.example.cesar.agrosmart.api;
 
-import com.example.cesar.agrosmart.apiBody.addEquipoBody;
-import com.example.cesar.agrosmart.apiBody.addFincaBody;
-import com.example.cesar.agrosmart.apiBody.addParcelaBody;
-import com.example.cesar.agrosmart.apiBody.addUsuariosBody;
+import com.example.cesar.agrosmart.apiBody.add.addEquipoBody;
+import com.example.cesar.agrosmart.apiBody.add.addFincaBody;
+import com.example.cesar.agrosmart.apiBody.add.addParcelaBody;
+import com.example.cesar.agrosmart.apiBody.add.addUsuariosBody;
+import com.example.cesar.agrosmart.apiBody.agronomo.parcelasUsuarioBody;
 import com.example.cesar.agrosmart.apiBody.asociar.AddAsociarParcelaBody;
 import com.example.cesar.agrosmart.apiBody.asociar.AddAsociarUsuarioANDEquipoBody;
 import com.example.cesar.agrosmart.apiBody.asociar.CambiarEstadoElemento;
 import com.example.cesar.agrosmart.apiBody.asociar.ReadAsociarParcelaBody;
 import com.example.cesar.agrosmart.apiBody.asociar.ReadAsociarUsuarioANDEquipoBody;
-import com.example.cesar.agrosmart.apiBody.deleteBody;
+import com.example.cesar.agrosmart.apiBody.idANDjwtBody;
 import com.example.cesar.agrosmart.apiBody.jwtOnlyBody;
 import com.example.cesar.agrosmart.apiBody.loginBody;
 import com.example.cesar.agrosmart.apiBody.update.updateEquipoBody;
@@ -18,6 +19,7 @@ import com.example.cesar.agrosmart.apiBody.update.updateParcelaBody;
 import com.example.cesar.agrosmart.apiBody.update.updateUsuarioBody;
 import com.example.cesar.agrosmart.apiBody.update.updateUsuariopassBody;
 import com.example.cesar.agrosmart.models.LoginRespuesta;
+import com.example.cesar.agrosmart.models.datos.ReadVariablesRespuesta;
 import com.example.cesar.agrosmart.models.equipos.ReadAsociarEquipoRespuesta;
 import com.example.cesar.agrosmart.models.equipos.ReadEquiposRespuesta;
 import com.example.cesar.agrosmart.models.fincas.ReadFincasRespuesta;
@@ -64,16 +66,16 @@ public interface ApiService {
     Call<Respuesta> guardarEquipo(@Body addEquipoBody addEquipoBody);
 
     @POST("usuarios/delete.php")
-    Call<Respuesta> eliminarUsuario(@Body deleteBody deleteBody);
+    Call<Respuesta> eliminarUsuario(@Body idANDjwtBody idANDjwtBody);
 
     @POST("parcelas/delete.php")
-    Call<Respuesta> eliminarParcela(@Body deleteBody deleteBody);
+    Call<Respuesta> eliminarParcela(@Body idANDjwtBody idANDjwtBody);
 
     @POST("fincas/delete.php")
-    Call<Respuesta> eliminarFinca(@Body deleteBody deleteBody);
+    Call<Respuesta> eliminarFinca(@Body idANDjwtBody idANDjwtBody);
 
     @POST("equipos/delete.php")
-    Call<Respuesta> eliminarEquipo(@Body deleteBody deleteBody);
+    Call<Respuesta> eliminarEquipo(@Body idANDjwtBody idANDjwtBody);
 
     @POST("usuarios/update.php")
     Call<Respuesta> updateUsuario(@Body updateUsuarioBody updateUsuarioBody);
@@ -94,7 +96,7 @@ public interface ApiService {
     Call<ReadAsociarParcelaRespuesta> readAsociarParcela(@Body ReadAsociarParcelaBody readAsociarParcelaBody);
 
     @POST("asociar/rmparcela.php")
-    Call<Respuesta> rmAsociarParcela(@Body deleteBody deleteBody);
+    Call<Respuesta> rmAsociarParcela(@Body idANDjwtBody idANDjwtBody);
 
     @POST("asociar/addparcela.php")
     Call<Respuesta> addAsociarParcela(@Body AddAsociarParcelaBody addAsociarParcelaBody);
@@ -103,13 +105,13 @@ public interface ApiService {
     Call<ReadAsociarUsuarioRespuesta> readAsociarUsuario(@Body ReadAsociarUsuarioANDEquipoBody readAsociarUsuarioANDEquipoBody);
 
     @POST("asociar/rmusuario.php")
-    Call<Respuesta> rmAsociarUsuario(@Body deleteBody deleteBody);
+    Call<Respuesta> rmAsociarUsuario(@Body idANDjwtBody idANDjwtBody);
 
     @POST("asociar/addusuario.php")
     Call<Respuesta> addAsociarUsuario(@Body AddAsociarUsuarioANDEquipoBody addAsociarUsuarioANDEquipoBody);
 
     @POST("asociar/rmequipo.php")
-    Call<Respuesta> rmAsociarEquipo(@Body deleteBody deleteBody);
+    Call<Respuesta> rmAsociarEquipo(@Body idANDjwtBody idANDjwtBody);
 
     @POST("asociar/addequipo.php")
     Call<Respuesta> addAsociarEquipos(@Body AddAsociarUsuarioANDEquipoBody addAsociarUsuarioANDEquipoBody);
@@ -119,5 +121,17 @@ public interface ApiService {
 
     @POST("asociar/estado.php")
     Call<Respuesta> cambiarEstado(@Body CambiarEstadoElemento cambiarEstadoElemento);
+
+    @POST("datos/read_fincas.php")
+    Call<ReadFincasRespuesta> readFincasUsuario(@Body idANDjwtBody idANDjwtBody);
+
+    @POST("datos/read_parcelas.php")
+    Call<ReadAsociarParcelaRespuesta> readParcelasUsuario(@Body parcelasUsuarioBody parcelasUsuarioBody);
+
+    @POST("datos/read_equipos.php")
+    Call<ReadAsociarEquipoRespuesta> readEquiposUsuarios(@Body idANDjwtBody idANDjwtBody);
+
+    @POST("datos/read_variables.php")
+    Call<ReadVariablesRespuesta> readVariablesEquipo(@Body idANDjwtBody idANDjwtBody);
 
 }

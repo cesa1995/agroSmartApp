@@ -12,6 +12,7 @@ public class sessionPrefs {
     private static final String apellido = "apellido";
     private static final String nivel = "nivel";
     private static final String jwt = "jwt";
+    private static final String id = "id";
 
     private final SharedPreferences mPrefs;
 
@@ -42,6 +43,7 @@ public class sessionPrefs {
             editor.putString(apellido, loginRespuesta.getApellido());
             editor.putString(nivel, loginRespuesta.getNivel());
             editor.putString(jwt, loginRespuesta.getJwt());
+            editor.putString(id, loginRespuesta.getId());
 
             editor.apply();
 
@@ -56,6 +58,7 @@ public class sessionPrefs {
         editor.putString(apellido, null);
         editor.putString(nivel, null);
         editor.putString(jwt, null);
+        editor.putString(id, null);
         editor.apply();
     }
 }

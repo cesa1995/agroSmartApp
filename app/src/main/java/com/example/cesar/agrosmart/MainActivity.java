@@ -17,13 +17,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.example.cesar.agrosmart.admin.Index.IndexAdmin;
+import com.example.cesar.agrosmart.admin.Index.adminIndex;
 import com.example.cesar.agrosmart.admin.admin.adminConfiEquipos;
 import com.example.cesar.agrosmart.admin.admin.adminEquipos;
 import com.example.cesar.agrosmart.admin.admin.adminFincas;
 import com.example.cesar.agrosmart.admin.admin.adminParcela;
 import com.example.cesar.agrosmart.admin.admin.adminUsuarios;
-import com.example.cesar.agrosmart.agrono.IndexAgrono;
+import com.example.cesar.agrosmart.admin.asociar.adminAsociarFinca;
+import com.example.cesar.agrosmart.agrono.listas.fincasSelectIndex;
 import com.example.cesar.agrosmart.client.IndexClient;
 import com.example.cesar.agrosmart.interfaces.IFragments;
 import com.example.cesar.agrosmart.session.sessionPrefs;
@@ -31,7 +32,7 @@ import com.example.cesar.agrosmart.session.sessionPrefs;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,IFragments {
 
-    String nombre,apellido,nivel,jwt;
+    String nombre,apellido,nivel,jwt,id;
     Toolbar toolbar;
     Bundle bundle;
 
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.admin_activity_main);
+        setContentView(R.layout.general_activity_main);
 
         bundle = bundle();
 
@@ -59,6 +60,10 @@ public class MainActivity extends AppCompatActivity
         }
 
         Index();
+    }
+
+    public void setActionBarTitle(String title){
+        getSupportActionBar().setTitle(title);
     }
 
     @Override
@@ -100,12 +105,14 @@ public class MainActivity extends AppCompatActivity
         this.nivel = preferences.getString("nivel",null);
         this.apellido = preferences.getString("apellido", null);
         this.jwt = preferences.getString("jwt", null);
+        this.id = preferences.getString("id", null);
 
         Bundle bundle = new Bundle();
         bundle.putString("nombre", nombre);
         bundle.putString("apellido", apellido);
         bundle.putString("nivel", nivel);
         bundle.putString("jwt", jwt);
+        bundle.putString("id", id);
 
         return bundle;
     }
@@ -114,19 +121,18 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = null;
         boolean fragmentSelect = false;
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
         switch (nivel){
             case "0": {
-                fragment = new IndexAdmin();
+                fragment = new adminIndex();
                 fragmentSelect = true;
-
-                NavigationView navigationView = findViewById(R.id.nav_view);
-                navigationView.inflateMenu(R.menu.activity_main_drawer);
-                navigationView.setNavigationItemSelectedListener(this);
+                navigationView.inflateMenu(R.menu.menu_admin);
             }break;
             case "1": {
-                fragment = new IndexAgrono();
+                fragment = new fincasSelectIndex();
                 fragmentSelect = true;
+                navigationView.inflateMenu(R.menu.menu_agronomo);
             }break;
             case "2": {
                 fragment = new IndexClient();
@@ -135,6 +141,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (fragmentSelect){
+            navigationView.setNavigationItemSelectedListener(this);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             fragment.setArguments(bundle);
             transaction.replace(R.id.content_main, fragment);
@@ -152,7 +159,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (id){
             case R.id.inicio:{
-                fragment = new IndexAdmin();
+                fragment = new adminAsociarFinca();
                 fragmentSelect=true;
             }break;
             case R.id.fincas:{
@@ -175,6 +182,10 @@ public class MainActivity extends AppCompatActivity
                 fragment = new adminConfiEquipos();
                 fragmentSelect = true;
             }break;
+            case R.id.inicio_agronomo:{
+                fragment = new fincasSelectIndex();
+                fragmentSelect= true;
+            }
         }
 
         if (fragmentSelect){
