@@ -98,7 +98,7 @@ public class datos extends Fragment {
         mUbicacionView.setText(Ubicacion);
 
         retrofit=new Retrofit.Builder()
-                .baseUrl("http://192.168.0.107/agroSmart/api/")
+                .baseUrl("http://3.16.180.219/agroSmart/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -111,7 +111,7 @@ public class datos extends Fragment {
         protected Void doInBackground(Void... voids) {
             String clientId = MqttClient.generateClientId();
             final MqttAndroidClient client;
-            client = new MqttAndroidClient(getContext(), "tcp://192.168.0.107:1883", clientId);
+            client = new MqttAndroidClient(getContext(), "tcp://3.16.180.219:1883", clientId);
             try {
                 final IMqttToken token = client.connect();
                 token.setActionCallback(new IMqttActionListener() {

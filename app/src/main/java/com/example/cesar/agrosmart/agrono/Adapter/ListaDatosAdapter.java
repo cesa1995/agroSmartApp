@@ -64,12 +64,11 @@ public class ListaDatosAdapter extends RecyclerView.Adapter<ListaDatosAdapter.Vi
             int result;
             try {
                 JSONObject datos = new JSONObject(dataMqtt);
-                holder.data=datos.getString(V.getVariables());
-                Double dom=Double.parseDouble(holder.data);
+                String data=datos.getString(V.getVariables());
+                Double dom=Double.parseDouble(data);
                 result=(int)dom.doubleValue();
                 holder.reloj.setProgress(result);
-                holder.mDatoView.setText(holder.data);
-                holder.asy();
+                holder.mDatoView.setText(data);
             }catch (Exception e){
                 Log.d("REad", e.getLocalizedMessage());
             }
@@ -127,10 +126,7 @@ public class ListaDatosAdapter extends RecyclerView.Adapter<ListaDatosAdapter.Vi
 
         private TextView mDatoView, mVariableView;
         private ProgressBar reloj;
-        private GraphView grafica;
-        private LineGraphSeries<DataPoint> mSerie1;
-        private String data;
-        private int i;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -138,39 +134,8 @@ public class ListaDatosAdapter extends RecyclerView.Adapter<ListaDatosAdapter.Vi
             mDatoView=itemView.findViewById(R.id.dato);
             reloj=itemView.findViewById(R.id.reloj);
 
-            grafica=itemView.findViewById(R.id.grafica);
-
-            mSerie1=new LineGraphSeries<>();
-            grafica.getGridLabelRenderer().setHorizontalLabelsVisible(false);
-            grafica.getViewport().setXAxisBoundsManual(true);
-            grafica.getViewport().setMinX(0);
-            grafica.getViewport().setMaxX(100);
-            grafica.getViewport().setYAxisBoundsManual(true);
-            grafica.getViewport().setMaxY(100);
-            grafica.getViewport().setMinY(0);
-
-
         }
 
-        public void asy(){
-            new addData().execute();
-        }
-
-        private class addData extends AsyncTask<Void, Void, Void>{
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                mSerie1.appendData(new DataPoint(i,Double.parseDouble(data)),true, 100);
-                i++;
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                grafica.addSeries(mSerie1);
-            }
-        }
 
     }
 }

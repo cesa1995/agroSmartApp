@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/todo"
+        android:title="To Do"
+        android:icon="@drawable/ic_tarea_list"/>
+
+    <item
+        android:id="@+id/done"
+        android:title="Done"
+        android:icon="@drawable/ic_tarea_done"/>
+
+    <item
+        android:id="@+id/dont"
+        android:title="Dont"
+        android:icon="@drawable/ic_tarea_dont_dont"/>
+
+    <item
+        android:id="@+id/add"
+        android:title="Add"
+        android:icon="@drawable/ic_tarea_add"/>
+
+</menu>

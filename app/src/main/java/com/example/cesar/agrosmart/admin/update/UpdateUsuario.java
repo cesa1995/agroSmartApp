@@ -76,7 +76,6 @@ public class UpdateUsuario extends Fragment {
 
         String[] niveles = {"Administrador", "Agronomo", "Cliente"};
         mNivelUsuariosView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext() , android.R.layout.simple_spinner_item,niveles));
-
         mNombreView.setText(nombre);
         mApellidoView.setText(apellido);
         mEmailView.setText(email);
@@ -119,7 +118,7 @@ public class UpdateUsuario extends Fragment {
         mProgressView=view.findViewById(R.id.progress);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.107/agroSmart/api/")
+                .baseUrl("http://3.16.180.219/agroSmart/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

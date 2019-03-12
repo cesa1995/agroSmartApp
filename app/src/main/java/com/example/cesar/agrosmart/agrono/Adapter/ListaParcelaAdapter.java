@@ -74,7 +74,8 @@ public class ListaParcelaAdapter extends RecyclerView.Adapter<ListaParcelaAdapte
                     for(AsociarParcela row : dataset){
                         if (row.getFinca().toLowerCase().contains(charString.toLowerCase()) ||
                                 row.getNombre().toLowerCase().contains(charString.toLowerCase()) ||
-                                row.getTipo().toLowerCase().contains(charString.toLowerCase())){
+                                row.getTipo().toLowerCase().contains(charString.toLowerCase())||
+                                row.getId().toLowerCase().contains(charString.toLowerCase())){
                             filteredList.add(row);
                         }
                     }
@@ -114,7 +115,7 @@ public class ListaParcelaAdapter extends RecyclerView.Adapter<ListaParcelaAdapte
                     Bundle bundle=new Bundle();
                     bundle.putString("jwt", jwt);
                     bundle.putString("idParcela", id);
-                    bundle.putString("Ubicacion", finca+" / "+parcela);
+                    bundle.putString("Ubicacion", finca+" - "+parcela);
                     Fragment fragment=new dashboard();
                     fragment.setArguments(bundle);
                     FragmentTransaction transaction=((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();

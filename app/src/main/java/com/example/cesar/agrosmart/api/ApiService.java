@@ -1,5 +1,6 @@
 package com.example.cesar.agrosmart.api;
 
+import com.example.cesar.agrosmart.agrono.comentarios.ReadMensajesRespuesta;
 import com.example.cesar.agrosmart.apiBody.add.addEquipoBody;
 import com.example.cesar.agrosmart.apiBody.add.addFincaBody;
 import com.example.cesar.agrosmart.apiBody.add.addParcelaBody;
@@ -10,9 +11,17 @@ import com.example.cesar.agrosmart.apiBody.asociar.AddAsociarUsuarioANDEquipoBod
 import com.example.cesar.agrosmart.apiBody.asociar.CambiarEstadoElemento;
 import com.example.cesar.agrosmart.apiBody.asociar.ReadAsociarParcelaBody;
 import com.example.cesar.agrosmart.apiBody.asociar.ReadAsociarUsuarioANDEquipoBody;
+import com.example.cesar.agrosmart.apiBody.comentarios.createComentariosBody;
+import com.example.cesar.agrosmart.apiBody.comentarios.deleteComentarioBody;
+import com.example.cesar.agrosmart.apiBody.comentarios.readComentariosBody;
 import com.example.cesar.agrosmart.apiBody.idANDjwtBody;
 import com.example.cesar.agrosmart.apiBody.jwtOnlyBody;
 import com.example.cesar.agrosmart.apiBody.loginBody;
+import com.example.cesar.agrosmart.apiBody.tareas.addTareaBody;
+import com.example.cesar.agrosmart.apiBody.tareas.readTareasBody;
+import com.example.cesar.agrosmart.apiBody.tareas.rmBody;
+import com.example.cesar.agrosmart.apiBody.tareas.updateStateBody;
+import com.example.cesar.agrosmart.apiBody.tareas.updateTareaBody;
 import com.example.cesar.agrosmart.apiBody.update.updateEquipoBody;
 import com.example.cesar.agrosmart.apiBody.update.updateFincaBody;
 import com.example.cesar.agrosmart.apiBody.update.updateParcelaBody;
@@ -26,6 +35,7 @@ import com.example.cesar.agrosmart.models.fincas.ReadFincasRespuesta;
 import com.example.cesar.agrosmart.models.parcelas.ReadAsociarParcelaRespuesta;
 import com.example.cesar.agrosmart.models.parcelas.ReadParcelasRespuesta;
 import com.example.cesar.agrosmart.models.respuesta.Respuesta;
+import com.example.cesar.agrosmart.models.tareas.ReadTareasRespuesta;
 import com.example.cesar.agrosmart.models.usuarios.ReadAsociarUsuarioRespuesta;
 import com.example.cesar.agrosmart.models.usuarios.ReadUsuariosRespuesta;
 
@@ -133,5 +143,29 @@ public interface ApiService {
 
     @POST("datos/read_variables.php")
     Call<ReadVariablesRespuesta> readVariablesEquipo(@Body idANDjwtBody idANDjwtBody);
+
+    @POST("tareas/read.php")
+    Call<ReadTareasRespuesta> readTareas(@Body readTareasBody readTareasBody);
+
+    @POST("tareas/create.php")
+    Call<Respuesta> addTareas(@Body addTareaBody addTareaBody);
+
+    @POST("tareas/delete.php")
+    Call<Respuesta> rmTarea(@Body rmBody rmBody);
+
+    @POST("tareas/updateState.php")
+    Call<Respuesta> updateState(@Body updateStateBody updateStateBody);
+
+    @POST("tareas/update.php")
+    Call<Respuesta> updateTarea(@Body updateTareaBody updateTareaBody);
+
+    @POST("comentario/create.php")
+    Call<Respuesta> createComentario(@Body createComentariosBody createComentariosBody);
+
+    @POST("comentario/read.php")
+    Call<ReadMensajesRespuesta> readMensaje(@Body readComentariosBody readComentariosBody);
+
+    @POST("comentario/delete.php")
+    Call<Respuesta> deleteMensajes(@Body deleteComentarioBody deleteComentarioBody);
 
 }

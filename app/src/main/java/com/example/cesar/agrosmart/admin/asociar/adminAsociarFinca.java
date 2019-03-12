@@ -65,7 +65,7 @@ public class adminAsociarFinca extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.107/agroSmart/api/")
+                .baseUrl("http://3.16.180.219/agroSmart/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

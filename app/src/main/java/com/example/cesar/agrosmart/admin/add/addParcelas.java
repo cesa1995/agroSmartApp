@@ -71,7 +71,7 @@ public class addParcelas extends Fragment {
         mProgressView = view.findViewById(R.id.progress);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.107/agroSmart/api/")
+                .baseUrl("http://3.16.180.219/agroSmart/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }

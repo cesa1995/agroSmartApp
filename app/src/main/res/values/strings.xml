@@ -10,9 +10,15 @@
     <string name="error_invalid_password">Esta contraseña es muy pequeña</string>
     <string name="error_incorrect_password">Esta contraseña es incorrecta</string>
     <string name="error_field_required">El campo es requerido</string>
-    <string name="permission_rationale">"Permisos a los conactos es requerido."
-    </string>
+    <string name="permission_rationale">"Permisos a los conactos es requerido."</string>
     <string name="error_network">Conexion de red no disponible</string>
+    <string name="inicio">Desde: </string>
+    <string name="fin">Hasta: </string>
+    <string name="cancelar">Cancelar</string>
+    <string name="add_date">Agregar Fecha</string>
+    <string name="add_time">Agregar Hora</string>
+    <string name="fecha">Fecha</string>
+    <string name="hora">Hora</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="fragment_admin">Fragment Administrador</string>
@@ -45,6 +51,7 @@
     <string name="cliente">Cliente</string>
 
     <string name="nombre">Nombre</string>
+    <string name="tarea">Tarea</string>
     <string name="apellido">Apellido</string>
     <string name="Email">Email</string>
     <string name="password">Contraseña</string>
@@ -81,6 +88,7 @@
     <string name="titulo_tarea">Leer las Tareas recomendadas a la parcela</string>
     <string name="titulo_datos">Ver datos de los Equipos</string>
     <string name="chose_finca">Elija la finca a Visualizar</string>
+    <string name="titulo_tarea_add">Agregar una Nueva Tarea</string>
 
     <string name="nombre_no_valido">Nombre no valido</string>
 
